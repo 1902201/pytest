@@ -136,23 +136,23 @@ pipeline {
         // }
 
         /* X09 SonarQube */ 
-        // stage('SonarQube') {
-        //     agent {
-        //         docker { image 'theimg:latest' }
-        //     }
-        //     steps {
-        //         script {
-        //             def scannerHome = tool 'SonarQube';
-        //             withSonarQubeEnv('SonarQube') {
-        //                 sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=test -Dsonar.sources=."
-        //             }
-        //         }
-        //     }
-        //     post {
-        //         always {
-        //             recordIssues enabledForFailure: true, tool: sonarQube()	
-        //         }
-        //     }
-        // }
+         stage('SonarQube') {
+             agent {
+                 docker { image 'theimg:latest' }
+             }
+             steps {
+                 script {
+                     def scannerHome = tool 'SonarQube';
+                     withSonarQubeEnv('SonarQube') {
+                         sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=test -Dsonar.sources=."
+                     }
+                 }
+             }
+             post {
+                 always {
+                     recordIssues enabledForFailure: true, tool: sonarQube()	
+                 }
+             }
+         }
     }
 }
